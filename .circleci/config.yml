@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    steps:
+      - checkout
+      - run:
+          name: Install AWS CLI
+          command: |
+            sudo apt-get install python3
+            sudo curl -O https://bootstrap.pypa.io/get-pip.py
+            sudo python get-pip.py
+            sudo pip install awscli
+            sudo pip install awscli --upgrade
+            aws --version
+      - run:
+          name: Run Test Case & Build Artifact
+          command: |
+            mvn package
+            cd target
+            ls -al
+            cd ..
+      - run:
+          name: Upload Artifact to AWS Lambda
+          command: |
+            echo "Hello the current build number is ${CIRCLE_BUILD_NUM}"
+            pwd
+            ls -al
+            cd target
+            ls -al
+            aws lambda update-function-code --function-name LambdaReset --zip-file file://./csye6225-spring2019-lambda-1.0-SNAPSHOT.jar

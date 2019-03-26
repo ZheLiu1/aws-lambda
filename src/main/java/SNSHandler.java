@@ -4,8 +4,6 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.*;
-import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
-import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.SNSEvent;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -31,7 +29,7 @@ public class SNSHandler implements RequestHandler<SNSEvent,Context>{
 
         //minutes of TTL
         long TTL = (long)Integer.parseInt(System.getenv("timeToLive"));
-        String source = System.getenv("FROM");
+        String source = "no-reply@" + System.getenv("FROM");
 
         AmazonDynamoDB clientDB =
                 AmazonDynamoDBClientBuilder.standard()
