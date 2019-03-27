@@ -29,7 +29,7 @@ public class SNSHandler implements RequestHandler<SNSEvent,Context>{
 
         //minutes of TTL
         long TTL = (long)Integer.parseInt(System.getenv("timeToLive"));
-        String source = "no-reply-test@" + System.getenv("FROM");
+        String source = "no-reply@" + System.getenv("FROM");
 
         AmazonDynamoDB clientDB =
                 AmazonDynamoDBClientBuilder.standard()
