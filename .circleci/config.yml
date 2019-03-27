@@ -29,4 +29,4 @@ jobs:
             ls -al
             cd target
             ls -al
-            aws lambda update-function-code --function-name LambdaReset --zip-file file://./csye6225-spring2019-lambda-1.0-SNAPSHOT.jar
+            aws lambda update-function-code --function-name LambdaReset --zip-file fileb://csye6225-spring2019-lambda-1.0-SNAPSHOT.jar
