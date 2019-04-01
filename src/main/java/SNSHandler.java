@@ -29,7 +29,8 @@ public class SNSHandler implements RequestHandler<SNSEvent,Context>{
 
         //minutes of TTL
         long TTL = (long)Integer.parseInt(System.getenv("timeToLive"));
-        String source = "no-reply@" + System.getenv("FROM");
+        String FROM = System.getenv("FROM");
+        String source = "no-reply@" + FROM;
 
         AmazonDynamoDB clientDB =
                 AmazonDynamoDBClientBuilder.standard()
@@ -74,9 +75,8 @@ public class SNSHandler implements RequestHandler<SNSEvent,Context>{
             }
 
             //send mail
-            String ec2Endpoint = System.getenv("ec2");
             String SUBJECT = "Password Reset Service";
-            String TEXTBODY = "http://" + ec2Endpoint + "/reset?email=" + mailAddress + "&token=" + uuid;
+            String TEXTBODY = "http://" + FROM + "/reset?email=" + mailAddress + "&token=" + uuid;
 
             try {
 
